@@ -37,10 +37,7 @@ def set(device, command):
     """A command on the set topic (<topic base>/set): {"greeting": "..."}."""
     if any(key != 'greeting' for key in command):
         return 'only greeting can be set'
-    error, changed = device.settings.update({'hello': command})
-    if not error:
-        device.applied(changed)
-    return error
+    return device.change({'hello': command})
 
 
 def applied(device, changed):
