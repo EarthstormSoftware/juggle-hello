@@ -80,7 +80,7 @@ POSTs from other sites' pages are refused, and with a web password set every req
 
 ## MQTT
 
-Under the topic base (`/home/device/{name}` unless changed):
+Under the topic base (`home/device/{name}` unless changed):
 
 | Topic | Is |
 |---|---|
