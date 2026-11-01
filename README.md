@@ -33,7 +33,9 @@ one doesn't keep running.
 3. In `app\product.py`, change `NAME`, and replace the greeting with the app's own settings and hooks. For a light,
    App Base's `device.py` lists the hooks, and
    [PlasmaStick Controller](https://github.com/EarthstormSoftware/plasmastick-controller) is one on a Pico W.
-4. In `app\www\index.html`, replace the Hello tab with the app's own; the Device and MQTT tabs can stay as they are.
+4. In `app\www\index.html`, replace the Hello tab with the app's own. The Device and MQTT tabs are App Base's
+   (`data-base-pane`): the app's own Device settings go in that pane as `<div class="group">` sections, and its own
+   words in the `<template data-slot>` elements.
 5. Change the tests in `tests\` to match, and the README.
 
 ## How it's laid out
@@ -46,7 +48,7 @@ Everything in `app\` goes to the Pi (`/data/app`), except App Base's Pico code:
 | `main.py` | Where it starts, with the OS's Python: `run(product)`. |
 | `product.py` | What's this app's own: its name, its settings, and the hooks App Base calls (here `info`, `state`, `set`, `applied`, `HA_ENTITIES` and `ha_entity`). App Base's `device.py` lists them all. |
 | `base\` | A copy of App Base, which the tests check is unchanged: a fix goes into App Base, then `..\app-base\update-base.ps1 -Product app` copies it in (`-Tag vX.Y.Z` for a release of App Base). |
-| `www\index.html` | Its page, using App Base's `/base.css` and `/base.js`. |
+| `www\index.html` | Its page, using App Base's `/base.css` and `/base.js`, which also makes the Device and MQTT tabs. |
 
 The Pi runs it as the `app` user, which may use port 80 and the hardware (GPIO, I2C, SPI, the display, touch, serial),
 and restarts it if it stops. It keeps its settings in the folder Juggle OS gives it (`/data/app-state`): the rest of
@@ -78,7 +80,7 @@ POSTs from other sites' pages are refused, and with a web password set every req
 
 ## MQTT
 
-Under the topic base (`/home/device/{name}` unless changed):
+Under the topic base (`home/device/{name}` unless changed):
 
 | Topic | Is |
 |---|---|

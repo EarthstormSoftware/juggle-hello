@@ -1,27 +1,24 @@
-"""Hello's own part, with App Base's real settings (saved in a temporary folder)."""
+"""Hello's own part, on App Base's real device and settings (saved in a temporary folder)."""
 import json
+import types
 
 import pytest
 
 import product
-from base.settings import Settings, merge
-
-
-class Device:
-    def __init__(self, path):
-        self.settings = Settings(str(path / 'config.json'), merge(product.SETTINGS))
-        self.states = 0
-
-    def applied(self, changed):
-        product.applied(self, changed)
-
-    def state_changed(self):
-        self.states += 1
+from base.device import Device
 
 
 @pytest.fixture
 def device(tmp_path):
-    return Device(tmp_path)
+    platform = types.SimpleNamespace(state_path=lambda name: str(tmp_path / name), device_name=lambda: 'hello',
+                                     NAME_EDITABLE=False, health=lambda: {}, SENSORS=())
+    d = Device(product, platform)
+    d.states = 0
+
+    def state_changed():
+        d.states += 1
+    d.state_changed = state_changed
+    return d
 
 
 def test_the_greeting_starts_as_the_default(device):
