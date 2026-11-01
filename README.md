@@ -32,7 +32,7 @@ one doesn't keep running.
    `"pwm": true` for WS2812 LEDs on GPIO 18.
 3. In `app\product.py`, change `NAME`, and replace the greeting with the app's own settings and hooks. For a light,
    App Base's `device.py` lists the hooks, and
-   [PlasmaStick Controller](https://github.com/EarthstormSoftware/plasmastick-controller) is one on a Pico W.
+   [Juggle Unicorn](https://github.com/EarthstormSoftware/juggle-unicorn) is one on Juggle OS.
 4. In `app\www\index.html`, replace the Hello tab with the app's own. The Device and MQTT tabs are App Base's
    (`data-base-pane`): the app's own Device settings go in that pane as `<div class="group">` sections, and its own
    words in the `<template data-slot>` elements.
